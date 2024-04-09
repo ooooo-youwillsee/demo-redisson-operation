@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
+import org.redisson.api.RPriorityQueue;
 import org.redisson.api.RSortedSet;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -73,10 +74,23 @@ public class RedissonOperationTest {
     @Test
     void testOrderedSet() {
         RSortedSet<String> set = redissonClient.getSortedSet("set");
+        set.clear();
         set.add("3");
         set.add("2");
         set.add("1");
         for (String s : set.readAll()) {
+            System.out.println(s);
+        }
+    }
+
+    @Test
+    void testPriorityQueue() {
+        RPriorityQueue<String> queue = redissonClient.getPriorityQueue("queue");
+        queue.clear();
+        queue.add("3");
+        queue.add("2");
+        queue.add("1");
+        for (String s : queue.readAll()) {
             System.out.println(s);
         }
     }
